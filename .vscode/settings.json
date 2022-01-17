@@ -1,0 +1,33 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.alwaysShowStatus": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.codeActionsOnSave.mode": "all",
+  "eslint.validate": [
+    { "language": "vue", "autofix": true },
+    { "language": "javascript", "autofix": true },
+    { "language": "typescript", "autofix": true }
+  ],
+  "editor.tabSize": 2,
+  // "prettier.singleQuote": true,
+  // "prettier.semi": false,
+  // "prettier.useTabs": true,
+  // "prettier.tabWidth": 2,
+  // "prettier.trailingComma": "es5",
+  // "prettier.printWidth": 80,
+  // "prettier.bracketSpacing": false,
+  // "prettier.arrowParens": "avoid",
+  // "prettier.singleline": "never",
+  // "prettier.multiline": "always",
+  // "prettier.bracketSameLine": true,
+  "editor.renderControlCharacters": true,
+  "editor.largeFileOptimizations": false,
+  "editor.renderWhitespace": "trailing",
+  "editor.wordWrap": "on",
+  "files.eol": "\n",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "diffEditor.ignoreTrimWhitespace": false
+}
