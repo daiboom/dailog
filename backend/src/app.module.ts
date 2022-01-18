@@ -4,6 +4,7 @@ import { join } from 'path'
 import { typeORMConfig } from 'src/configs/typeorm.config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { BoardsModule } from './Boards/boards.module'
+import { AuthModule } from './auth/auth.module';
 
 const root = join(__dirname, '..', '../frontend/dist')
 
@@ -14,6 +15,7 @@ const root = join(__dirname, '..', '../frontend/dist')
       rootPath: root,
     }),
     BoardsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
