@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common'
 import {
   Body,
   Controller,
@@ -23,10 +24,12 @@ import { BoardsService } from './boards.service'
 @Controller('boards')
 @UseGuards(AuthGuard())
 export class BoardsController {
+  private logger = new Logger('BoardsController')
   constructor(private boardService: BoardsService) {}
   @Get()
-  getAllBoards(): Promise<Board[]> {
-    return this.boardService.getAllBoards()
+  getAllBoard(@GetUser() user: User): Promise<Board[]> {
+    this.logger.verbose(`User ${user.username} trying to get all boards`)
+    return this.boardService.getAllBoard(user)
   }
 
   @Get(':id')
@@ -40,7 +43,9 @@ export class BoardsController {
     @Body() createBoardDto: CreateBoardDto,
     @GetUser() user: User,
   ): Promise<Board> {
-    console.log(createBoardDto)
+    this.logger.verbose(
+      `User ${user.username} creating a new board. Payload: ${createBoardDto.title} ${createBoardDto.description}`,
+    )
     return this.boardService.createBoard(createBoardDto, user)
   }
 
@@ -53,7 +58,10 @@ export class BoardsController {
   }
 
   @Delete('/:id')
-  deleteBoard(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.boardService.deleteBoard(id)
+  deleteBoard(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User,
+  ): Promise<void> {
+    return this.boardService.deleteBoard(id, user)
   }
 }

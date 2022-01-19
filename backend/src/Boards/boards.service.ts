@@ -12,8 +12,8 @@ export class BoardsService {
     @InjectRepository(BoardRepository)
     private boardRepository: BoardRepository,
   ) {}
-  async getAllBoards(): Promise<Board[]> {
-    return this.boardRepository.getAllBoards()
+  async getAllBoard(user: User): Promise<Board[]> {
+    return this.boardRepository.getAllBoard(user)
   }
 
   async getBoardById(id: number): Promise<Board> {
@@ -31,7 +31,7 @@ export class BoardsService {
     return this.boardRepository.updateBoardStatus(id, status)
   }
 
-  async deleteBoard(id: number): Promise<void> {
-    return this.boardRepository.deleteBoard(id)
+  async deleteBoard(id: number, user: User): Promise<void> {
+    return this.boardRepository.deleteBoard(id, user)
   }
 }

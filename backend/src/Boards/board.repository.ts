@@ -7,8 +7,12 @@ import { User } from 'src/auth/user.entity'
 
 @EntityRepository(Board)
 export class BoardRepository extends Repository<Board> {
-  async getAllBoards() {
-    return this.find()
+  async getAllBoard(user: User): Promise<Board[]> {
+    const query = this.createQueryBuilder('board')
+    query.where('board.userId = :userId', { userId: user.id })
+
+    const boards = await query.getMany()
+    return boards
   }
 
   async getBoardById(id: number) {
@@ -37,8 +41,8 @@ export class BoardRepository extends Repository<Board> {
     return board
   }
 
-  async deleteBoard(id: number) {
-    const res = await this.delete(id)
+  async deleteBoard(id: number, user: User) {
+    const res = await this.delete({ id, user })
     if (res.affected === 0) {
       throw new NotFoundException(`Can't find Board with id ${id}`)
     }
