@@ -8,6 +8,7 @@ import * as bcrypt from 'bcryptjs'
 
 import { AuthCredentialsDto } from './dto/auth-credential.dto'
 import { User } from './user.entity'
+import { JwtService } from '@nestjs/jwt'
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -30,14 +31,18 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<string> {
+  async signIn(
+    authCredentialsDto: AuthCredentialsDto,
+    jwtService: JwtService,
+  ): Promise<{ accessToken: string }> {
     const { username, password } = authCredentialsDto
     const user = await this.findOne({ username })
     const isSame = await bcrypt.compare(password, user.password)
-    console.log(isSame)
 
     if (user && isSame) {
-      return 'logIn success'
+      const payload = { username }
+      const accessToken = await jwtService.sign(payload)
+      return { accessToken }
     } else {
       throw new UnauthorizedException('login failed')
     }
